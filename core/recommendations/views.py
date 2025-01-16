@@ -4,13 +4,13 @@ from .models import UserPreference, Song, Artist, Genre
 from .serializers import UserPreferenceSerializer, SongSerializer, ArtistSerializer, GenreSerializer
 
 def index(request): 
-    return render(request, 'recommendation/index.html')
+    return render(request, 'index.html')
 
 def preferences(request): 
-    return render(request, 'recommendation/preferences.html')
+    return render(request, 'preferences.html')
 
 def recommendations(request):
-    return render(request, 'recommendation/recommendations.html')
+    return render(request, 'recommendations.html')
 
 class UserPreferencesListCreate(generics.ListCreateAPIView):
     queryset = UserPreference.objects.all()

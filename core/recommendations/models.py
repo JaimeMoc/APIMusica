@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 class Artist(models.Model):
     name = models.CharField(max_length=100, blank=False, unique=True, db_index=True)
@@ -22,7 +23,7 @@ class Genre(models.Model):
         return self.name
 
 class UserPreference(models.Model):
-    user  = models.ForeignKey(User, on_delete = models.CASCADE, related_name='preferences')
+    user  = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name='preferences')
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     song = models.CharField(max_length=100, blank=False)
