@@ -6,7 +6,7 @@ from .models import CustomUser, Profile, ProfileType
 class CustomUserAdmin(UserAdmin):
     list_display = ('id', 'first_name', 'last_name', 'email', 'date_joined')
     date_hierarchy = 'date_joined'
-    ordering = ('-id')
+    ordering = ('-id',)
     
     fieldsets = (
         ( None, {
