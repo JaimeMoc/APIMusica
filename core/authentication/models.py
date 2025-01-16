@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
         
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     username = models.CharField(max_length=50, null = True, blank = True)
-    email = models.EmailField(max_length=130, unique = True, null = False)
+    email = models.EmailField(max_length=130, unique = True, null = False, blank=False)
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='customuser_set',  # Añadir related_name
