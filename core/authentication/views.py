@@ -10,9 +10,13 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 from .serializers import LoginSerializer, UserSerializer
 from .models import ProfileType, Profile
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data = request.data)
@@ -42,7 +46,8 @@ class LoginView(APIView):
                     "message": "The credentiales provided are not valid. Please review your information and try again"     
                 },    
                 status = status.HTTP_401_UNAUTHORIZED)
-            
+
+@method_decorator(csrf_exempt, name='dispatch')            
 class SignUpView(APIView): 
     serializer_class = UserSerializer
     
@@ -51,7 +56,7 @@ class SignUpView(APIView):
         serializer.is_valid(raise_exception= True)
         try:
             user, profile_type_selected = serializer.save()
-            refresh, _ = RefreshToken.for_user(user)
+            refresh = RefreshToken.for_user(user)
             user_serialized = UserSerializer(user)
             user_serialized = dict(user_serialized.data)
             user_serialized['refresh'] = str(refresh)
@@ -68,6 +73,7 @@ class SignUpView(APIView):
                 },
                 status= status.HTTP_400_BAD_REQUEST)
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
     
